@@ -1,0 +1,136 @@
+@include('koorPKL.dashboard.header')
+
+
+@include('koorPKL.dashboard.sidebar')
+
+
+            <!-- ============================================================== -->
+            <!-- Start right Content here -->
+            <!-- ============================================================== -->
+            <div class="main-content">
+
+                <div class="page-content">
+                    <div class="container-fluid">
+
+                        {{-- Diterima --}}
+                        @if (session()->has('success'))
+                    <div class="fw-bold text-success text-dark p-4">
+                        <div class="container">
+                            {{ session('success') }}
+                        </div>
+                    </div>
+                @endif
+
+                {{-- Ditolak --}}
+                @if (session()->has('status_message'))
+                    <div class="fw-bold text-success text-dark p-4">
+                        <div class="container">
+                            {{ session('status_message') }}
+                        </div>
+                    </div>
+                @endif
+
+                        <!-- start page title -->
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                                    <h4 class="mb-sm-0 font-size-18">Status Prakerin</h4>
+
+                                    <div class="page-title-right">
+                                        <ol class="breadcrumb m-0">
+                                            <li class="breadcrumb-item"><a href="javascript: void(0);">Informations</a></li>
+                                            <li class="breadcrumb-item active">Information</li>
+                                        </ol>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            
+                                            <h4 class="card-title mb-0 mb-3">Status Prakerin</h4>
+                                            <!-- App Search-->
+                                            {{-- <a href="/penerimaan-pkl/create" class="btn btn-primary shadow-sm">Add New Status</a> --}}
+                                            <form class="app-search float-end d-none d-lg-block">
+                                                <div class="position-relative">
+                                                    <input type="text" class="form-control" placeholder="Search...">
+                                                    <span class="bx bx-search-alt"></span>
+                                                </div>
+                                            </form>
+    
+                                            <table id="datatable" class="table-small table-bordered border-1 border-dark dt-responsive nowrap w-100">
+                                                <thead>
+                                                <tr>
+                                                    <th>No</th>
+                                                    <th>Nama</th>
+                                                    <th>Nama Sekolah</th>
+                                                    <th>Kelas</th>
+                                                    <th>Jurusan</th>
+                                                    <th>Nama Pembimbing</th>
+                                                    <th>No.Telp</th>
+                                                    <th>Tanggal Bergabung</th>
+                                                    <th>Posisi</th>
+                                                    <th>Status</th>
+                                                    <th>Aksi</th>
+                                                </tr>
+                                                </thead>
+            
+                                                <tbody>
+                                                    @foreach ($users as $user)
+                                                <tr>
+                                                    <td>{{ $loop->iteration }}</td>
+                                                    <td>{{ $user->nama }}</td>
+                                                    <td>{{ $user->nama_sekolah }}</td>
+                                                    <td>{{ $user->kelas }}</td>
+                                                    <td>{{ $user->jurusan }}</td>
+                                                    <td>{{ $user->nama_pembimbing }}</td>
+                                                    <td>{{ $user->nomor_telepon }}</td>
+                                                    <td>{{ $user->tanggal_bergabung }}</td>
+                                                    <td>{{ $user->department->posisi }}</td>
+                                                    <td>
+                                                        @if ($user->status == '0')
+                                                        <a href="" class="bg-warning text-light">Pending</a>
+                                                        @elseif($user->status == 'Ditolak')
+                                                        <a href="" class="bg-danger text-white">Ditolak</a>
+                                                        @else
+                                                        <a href="" class="bg-success text-light">Diterima</a>
+                                                        @endif
+                                                    </td>
+                                                    <td><a href="/penerimaan-pkl/{{ $user->id }}/edit" class="btn btn-warning"><i class="bx bx-edit"></i></a></td>
+                                                </tr>
+                                                @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div> <!-- end col -->
+                            </div> <!-- end row -->
+                            
+                        </div>
+                            <!-- </div> -->
+                        <!-- end page title -->
+
+                        <footer class="footer">
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        PT.Era Solution
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="text-sm-end d-none d-sm-block">
+                                            Design & Develop by Alfan
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </footer>
+            </div>
+            <!-- end main content-->
+
+        </div>
+        <!-- END layout-wrapper -->
+
+@include('siswa.statusPrakerin.footer')
